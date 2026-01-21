@@ -1,0 +1,33 @@
+# robots.txt para PetoClub
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/img/
+
+# Disallow if necessary
+# Disallow: /private/
+
+# Sitemap
+Sitemap: https://petoclub.com.ar/sitemap.xml
+
+# Crawl-delay (optional)
+# Crawl-delay: 1
+
+# Popular bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /

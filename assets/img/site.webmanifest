@@ -1,0 +1,149 @@
+{
+    "name": "PetoClub - La App de Mascotas en San Juan",
+    "short_name": "PetoClub",
+    "description": "La app de mascotas número uno en San Juan. Encontrá veterinarias, pet shops y conectá con la comunidad pet.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FAFAFA",
+    "theme_color": "#3b1685",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "assets/img/icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/img/icon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/img/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/img/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/img/icon-152x152.png",
+            "sizes": "152x152",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/img/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/img/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/img/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/img/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/img/maskable-icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "assets/img/screenshot1.png",
+            "sizes": "540x720",
+            "type": "image/png",
+            "label": "Pantalla principal de PetoClub"
+        },
+        {
+            "src": "assets/img/screenshot2.png",
+            "sizes": "540x720",
+            "type": "image/png",
+            "label": "Búsqueda de veterinarias cercanas"
+        }
+    ],
+    "categories": ["lifestyle", "utilities", "social"],
+    "shortcuts": [
+        {
+            "name": "Veterinarias",
+            "short_name": "Vets",
+            "description": "Encontrá veterinarias cercanas",
+            "url": "/?feature=veterinarias",
+            "icons": [
+                {
+                    "src": "assets/img/shortcut-vet.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "PetoMatch",
+            "short_name": "Match",
+            "description": "Conectá con otras mascotas",
+            "url": "/?feature=match",
+            "icons": [
+                {
+                    "src": "assets/img/shortcut-match.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Tienda",
+            "short_name": "Shop",
+            "description": "Comprá productos para tu mascota",
+            "url": "/?feature=tienda",
+            "icons": [
+                {
+                    "src": "assets/img/shortcut-shop.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Eventos",
+            "short_name": "Eventos",
+            "description": "Eventos pet-friendly cerca de vos",
+            "url": "/?feature=eventos",
+            "icons": [
+                {
+                    "src": "assets/img/shortcut-events.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "related_applications": [
+        {
+            "platform": "itunes",
+            "url": "https://apps.apple.com/ar/app/petoclub-mascotas-san-juan/id1234567890",
+            "id": "com.petoclub.app"
+        },
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=com.petoclub.app",
+            "id": "com.petoclub.app"
+        }
+    ]
+}
