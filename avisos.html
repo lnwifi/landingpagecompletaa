@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetoClub - Cargando...</title>
+    
+    <!-- Meta tags básicos -->
+    <meta name="description" content="PetoClub - Red de ayuda para mascotas perdidas y encontradas">
+    <meta name="keywords" content="mascota perdida, mascota encontrada, PetoClub, red de ayuda">
+    
+    <!-- Estilos CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .loading {
+            padding: 60px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            padding: 60px;
+            text-align: center;
+            color: #e74c3c;
+        }
+        
+        .header {
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header.perdido {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+        }
+        
+        .header.encontrado {
+            background: linear-gradient(135deg, #4ecdc4, #26a69a);
+        }
+        
+        .tipo-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        .tipo-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        
+        .nombre-mascota {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .especie {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+        
+        .badges {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .badge {
+            background: rgba(255,188,76,0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .image-gallery {
+            margin-bottom: 30px;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .thumbnail-gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 5px 0;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+        
+        .thumbnail:hover,
+        .thumbnail.active {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+        }
+        
+        .info-card.perdido {
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .info-card.encontrado {
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card h3.perdido {
+            color: #ff6b6b;
+        }
+        
+        .info-card h3.encontrado {
+            color: #4ecdc4;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            color: #666;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+            min-width: 100px;
+        }
+        
+        .info-value {
+            color: #212529;
+        }
+        
+        .description {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            color: #495057;
+        }
+        
+        .contact-section {
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .contact-section.perdido {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+        }
+        
+        .contact-section.encontrado {
+            background: linear-gradient(135deg, #4ecdc4, #26a69a);
+        }
+        
+        .contact-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .contact-info {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .action-btn {
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .action-btn.perdido {
+            background: #ff6b6b;
+        }
+        
+        .action-btn.encontrado {
+            background: #4ecdc4;
+        }
+        
+        .action-btn.secondary {
+            background: #6c757d;
+        }
+        
+        .action-btn.whatsapp {
+            background: #25d366;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        
+        .footer-logo.perdido {
+            color: #ff6b6b;
+        }
+        
+        .footer-logo.encontrado {
+            color: #4ecdc4;
+        }
+        
+        .footer-text {
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+        
+        .download-app {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .download-app.perdido {
+            background: #ff6b6b;
+        }
+        
+        .download-app.encontrado {
+            background: #4ecdc4;
+        }
+        
+        .download-app:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .nombre-mascota {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .main-image {
+                height: 300px;
+            }
+            
+            .badges {
+                position: static;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading" id="loading">
+            <div class="loader"></div>
+            <h2>Cargando información de la mascota...</h2>
+            <p>Por favor espera un momento</p>
+        </div>
+        
+        <div class="error" id="error" style="display: none;">
+            <h2>❌ Aviso no encontrado</h2>
+            <p>El aviso que buscas no existe o ha expirado.</p>
+            <br>
+            <a href="#" onclick="location.reload()" class="action-btn secondary">
+                🔄 Intentar de nuevo
+            </a>
+        </div>
+        
+        <div id="content" style="display: none;">
+            <!-- El contenido se carga dinámicamente aquí -->
+        </div>
+    </div>
+
+    <script>
+        // Obtener ID del aviso desde la URL
+        function getAvisoId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id') || window.location.hash.substring(1) || window.location.pathname.split('/').pop();
+        }
+
+        // Cambiar imagen principal
+        function changeMainImage(src) {
+            const mainImage = document.getElementById('mainImage');
+            if (mainImage) {
+                mainImage.src = src;
+                
+                // Actualizar thumbnails activos
+                document.querySelectorAll('.thumbnail').forEach(thumb => {
+                    thumb.classList.remove('active');
+                    if (thumb.src === src) {
+                        thumb.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        // Copiar enlace al portapapeles
+        async function copyToClipboard() {
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                alert('¡Enlace copiado al portapapeles!');
+            } catch (err) {
+                // Fallback para navegadores más antiguos
+                const textArea = document.createElement('textarea');
+                textArea.value = window.location.href;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('¡Enlace copiado!');
+            }
+        }
+
+        // Compartir nativo
+        async function shareNative() {
+            const aviso = window.avisoData;
+            if (navigator.share && aviso) {
+                try {
+                    await navigator.share({
+                        title: `${aviso.tipo_aviso === 'perdido' ? 'Mascota Perdida' : 'Mascota Encontrada'}: ${aviso.nombre} - PetoClub`,
+                        text: aviso.descripcion || `${aviso.especie} ${aviso.tipo_aviso} en ${aviso.ubicacion}. Ayuda a difundir este aviso.`,
+                        url: window.location.href
+                    });
+                } catch (err) {
+                    copyToClipboard();
+                }
+            } else {
+                copyToClipboard();
+            }
+        }
+
+        // Formatear fecha
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-AR', { 
+                day: '2-digit', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+        }
+
+        // Cargar datos del aviso
+        async function loadAviso() {
+            const avisoId = getAvisoId();
+            
+            if (!avisoId) {
+                console.error('❌ No aviso ID found');
+                showError();
+                return;
+            }
+
+            try {
+                const apiUrl = `https://cbrxgjksefmgtoatkbbs.supabase.co/functions/v1/get_aviso_api/${avisoId}`;
+                console.log('🌐 Fetching from:', apiUrl);
+                
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                console.log('📡 Response status:', response.status);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ API Error:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+                
+                const data = await response.json();
+                console.log('📋 API Response:', data);
+                
+                if (data.aviso) {
+                    renderAviso(data.aviso);
+                } else if (data.error) {
+                    console.error('❌ API returned error:', data.error);
+                    throw new Error(data.error);
+                } else {
+                    throw new Error('Datos no válidos en la respuesta');
+                }
+                
+            } catch (error) {
+                console.error('❌ Error cargando aviso:', error);
+                showError();
+            }
+        }
+
+        // Mostrar error
+        function showError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+        }
+
+        // Renderizar aviso
+        function renderAviso(aviso) {
+            window.avisoData = aviso;
+            
+            // Actualizar meta tags
+            document.title = `${aviso.tipo_aviso === 'perdido' ? 'Mascota Perdida' : 'Mascota Encontrada'}: ${aviso.nombre} - PetoClub`;
+            
+            const description = aviso.descripcion || `${aviso.especie} ${aviso.tipo_aviso} en ${aviso.ubicacion}. Ayuda a difundir este aviso.`;
+            document.querySelector('meta[name="description"]').content = description;
+            
+            // Crear galería de imágenes
+            let galeriaImagenes = '';
+            if (aviso.imagenes_urls && aviso.imagenes_urls.length > 0) {
+                galeriaImagenes = `
+                    <div class="image-gallery">
+                        <img src="${aviso.imagenes_urls[0]}" alt="${aviso.nombre}" class="main-image" id="mainImage">
+                        ${aviso.imagenes_urls.length > 1 ? `
+                            <div class="thumbnail-gallery">
+                                ${aviso.imagenes_urls.map((url, index) => 
+                                    `<img src="${url}" alt="${aviso.nombre}" class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage('${url}')">`
+                                ).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+
+            // Crear sección de descripción
+            const descripcionSection = aviso.descripcion ? `
+                <div class="description">
+                    <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;" class="${aviso.tipo_aviso}">
+                        <span>📝</span>
+                        Descripción
+                    </h3>
+                    <p>${aviso.descripcion}</p>
+                </div>
+            ` : '';
+
+            // Crear badges
+            let badges = '';
+            if (aviso.destacado) {
+                badges += '<div class="badge">⭐ Destacado</div>';
+            }
+
+            // Mensaje para WhatsApp
+            const mensajeWhatsApp = encodeURIComponent(
+                `🐾 ${aviso.tipo_aviso === 'perdido' ? 'Mascota Perdida' : 'Mascota Encontrada'}: ${aviso.nombre}\n\n${description}\n\n📍 ${aviso.ubicacion}\n📞 ${aviso.contacto}\n\n🔗 ${window.location.href}`
+            );
+
+            // Renderizar contenido
+            const html = `
+                <!-- Header -->
+                <div class="header ${aviso.tipo_aviso}">
+                    <div class="badges">
+                        ${badges}
+                    </div>
+                    
+                    <div class="tipo-badge">
+                        <span class="tipo-icon">${aviso.tipo_aviso === 'perdido' ? '🔍' : '🐾'}</span>
+                        ${aviso.tipo_aviso === 'perdido' ? 'MASCOTA PERDIDA' : 'MASCOTA ENCONTRADA'}
+                    </div>
+                    
+                    <h1 class="nombre-mascota">${aviso.nombre}</h1>
+                    <p class="especie">${aviso.especie}</p>
+                </div>
+
+                <!-- Contenido -->
+                <div class="content">
+                    <!-- Galería de imágenes -->
+                    ${galeriaImagenes}
+
+                    <!-- Información -->
+                    <div class="info-section">
+                        <div class="info-card ${aviso.tipo_aviso}">
+                            <h3 class="${aviso.tipo_aviso}">
+                                <span>📍</span>
+                                Información General
+                            </h3>
+                            <div class="info-item">
+                                <span class="info-icon">🐾</span>
+                                <span class="info-label">Especie:</span>
+                                <span class="info-value">${aviso.especie}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">📍</span>
+                                <span class="info-label">Ubicación:</span>
+                                <span class="info-value">${aviso.ubicacion}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">📅</span>
+                                <span class="info-label">Fecha:</span>
+                                <span class="info-value">${formatDate(aviso.fecha)}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    ${descripcionSection}
+
+                    <!-- Contacto -->
+                    <div class="contact-section ${aviso.tipo_aviso}">
+                        <h3>💬 Información de Contacto</h3>
+                        <div class="contact-info">
+                            ${aviso.contacto}
+                        </div>
+                        
+                        <div class="actions">
+                            <a href="https://wa.me/?text=${mensajeWhatsApp}" class="action-btn whatsapp" target="_blank">
+                                <span>💬</span>
+                                Compartir por WhatsApp
+                            </a>
+                            <button onclick="copyToClipboard()" class="action-btn secondary">
+                                <span>📋</span>
+                                Copiar enlace
+                            </button>
+                            <button onclick="shareNative()" class="action-btn ${aviso.tipo_aviso}">
+                                <span>📤</span>
+                                Compartir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer">
+                    <div class="footer-logo ${aviso.tipo_aviso}">🐾 PetoClub</div>
+                    <p class="footer-text">
+                        Ayudamos a reunir mascotas con sus familias.<br>
+                        Descarga la app para reportar y buscar mascotas.
+                    </p>
+                    <a href="#" class="download-app ${aviso.tipo_aviso}">
+                        <span>📱</span>
+                        Descargar PetoClub
+                    </a>
+                </div>
+            `;
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').innerHTML = html;
+            document.getElementById('content').style.display = 'block';
+        }
+
+        // Inicializar cuando se carga la página
+        document.addEventListener('DOMContentLoaded', loadAviso);
+    </script>
+</body>
+</html>
